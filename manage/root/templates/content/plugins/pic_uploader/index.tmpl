@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title tal:content="string:${name}: Management - Inhalte - Bilderupload"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+        <script type="text/javascript" src="${uri_static}/scripts/plugins/pic_uploader/scripts.js"></script>
+    </head>
+    <body>
+        <div id="plugin" class="pic_uploader">
+            <h2>Bilderupload</h2>
+            <form method="post" action="" enctype="multipart/form-data">
+                <input name="files[]" id="files" type="file" multiple="multiple" onchange="make_file_list();" />
+                
+                <ul id="file_list">
+                    <li id="file_item" class="hide">
+                        <span class="name"/>
+                        <input type="text"/>
+                    </li>
+                </ul>
+                
+                
+                <input type="checkbox" value="1" name="scale" onclick="toggle_scale_options();"/>Bilder zuschneiden
+                <div id="scale_options" class="hide">
+                    <fieldset>
+                        <legend>Optionen</legend>
+                        <label>
+                            <span>verkleinern auf</span>
+                            <input type="text" name="scale_percentage" class="small"/>
+                            <span>%</span>
+                        </label>
+                        <b>oder</b>
+                        <label>
+                            <span>Weite</span>
+                            <input type="text" name="scale_width"  class="small"/>
+                            <span>px</span>
+                        </label>
+                        <label>
+                            <span>Höhe</span>
+                            <input type="text" name="scale_height" class="small"/>
+                            <span>px</span>
+                        </label>
+                    </fieldset>
+                </div>
+                <p>
+                    <button type="submit" name="submit" value="1"><span>Uploaden</span></button>
+                </p>
+            </form>
+        </div>
+    </body>
+</html>

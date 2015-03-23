@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title tal:content="string:${name}: Management - System"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div id="management">
+            <div metal:use-macro="../macros.tmpl/navigation"/>
+            <div id="system">
+                <h2>System</h2>
+                <p tal:condition="true:message" metal:use-macro="../macros.tmpl/message"/>
+                <h3>Sicherungen</h3>
+                <p class="new_backup"><a tal:attributes="href uri_backup" target="_blank">neues Backup erstellen</a></p>
+                <p class="message warning" tal:condition="not:backups">keine Sicherungen vorhanden</p>
+                <table tal:condition="backups">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr tal:repeat="backup backups">
+                            <td><a tal:attributes="href backup/uri_backup" tal:content="backup/name"/></td>
+                            <td><a tal:attributes="href backup/uri_delete" class="delete">löschen</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

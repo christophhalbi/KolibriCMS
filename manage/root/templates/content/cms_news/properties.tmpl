@@ -1,0 +1,15 @@
+﻿<div metal:use-macro="../../macros.tmpl/object_heading"/>
+<form action="" method="post">
+    <fieldset>
+        <label>
+            <span>Titel</span>
+            <input type="text" name="title" tal:attributes="value self/title"/>
+        </label>
+        <label>
+            <span>aktiv</span>
+            <input type="checkbox" name="active" value="1" tal:attributes="checked self/active"/>
+        </label>
+        <div metal:use-macro="../../macros.tmpl/texteditor"/>
+        <p><button type="submit" name="submit" value="1"><span>Speichern</span></button></p>
+    </fieldset>
+</form>

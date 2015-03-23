@@ -1,0 +1,40 @@
+<div class="cms_form" tal:attributes="id self/get_dcid">
+
+    <form method="post">
+
+        <input type="hidden" name="security_expected_result" tal:attributes="value security_result"/>
+
+        <div tal:condition="true: errors" class="error_msg">
+            <span>Mit * bezeichnete Felder sind zwingend auszufüllen.</span>
+            <p>
+                <span tal:repeat="error errors" tal:content="error"/>
+            </p>
+        </div>
+
+        <table>
+            <tr tal:repeat="field fields" tal:attributes="class php:(field['error']) ? 'error' : ''">
+                <td class="label">
+                    <span tal:content="field/label"/>
+                    <span tal:condition="true: field/required"> *</span>
+                </td>
+                <td>
+                    <input tal:attributes="type field/type; name field/name; value field/value"/>
+                </td>
+            </tr>
+            <tal:block tal:condition="php:(security_type == 'number_fun')" tal:omit-tag="">
+                <tr>
+                    <td colspan="2">Bitte lösen Sie die folgende Rechenaufgabe zur Verhinderung von Spam. Danke.</td>
+                </tr>
+                <tr tal:attributes="class php:(security_error) ? 'error' : ''">
+                    <td class="label"><span tal:content="string:${number_1} + ${number_2} ="/></td>
+                    <td><input type="text" name="security_result" style="width: 30px;"/></td>
+                </tr>
+            </tal:block>
+            <tr>
+                <td colspan="2"><button type="submit" name="submit_form_${self/id}" value="1">Absenden</button></td>
+            </tr>
+        </table>
+
+    </form>
+
+</div>

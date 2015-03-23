@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title tal:content="string:${name}: Management"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div id="management">
+            <div metal:use-macro="macros.tmpl/navigation"/>
+            <div id="start">
+                <h2>Willkommen im KolibriCMS</h2>
+                <div class="task content">
+                    <a tal:attributes="href uri_content">Pflegen Sie Ihre Inhalte</a>
+                    <p>Legen Sie neue Elemente an, bearbeiten oder löschen Sie diese.</p>
+                    <p class="description">Zur Verfügung stehen Text-, Link-, Abbildungs-, Datei-, News-, Seiten- und Containerobjekte.</p>
+                </div>
+                <div class="task global_objects">
+                    <a tal:attributes="href uri_global_objects">Machen Sie Objekte global verfügbar</a>
+                    <p>Manchmal bedarf es einem globalen Objekt, also einem Objekt, welches auf jeder Seite verfügbar ist.</p>
+                    <p class="description">Hier können Sie solche Objektverknüpfungen festlegen.</p>
+                </div>
+                <div class="task filesystem">
+                    <a tal:attributes="href uri_filesystem">Passen Sie die Ausgabe an</a>
+                    <p>Die Ausgabe passt nicht? Ein Style ist falsch?</p>
+                    <p class="description">Falls Sie Erfahrung mit HTML, CSS und JS haben können Sie das hier anpassen, es stehen alle für die Ausgabe relevanten Dateien zur Verfügung.</p>
+                </div>
+                <div class="task users">
+                    <a tal:attributes="href uri_users">Legen Sie Benutzer fest</a>
+                    <p>Sie bestimmen wer welche Daten beeinflussen darf.</p>
+                    <p class="description">Beim Anlegen neuer Benutzer kann deren Zugriff auf bestimmen Knoten geregelt werden. Nur ein Administrator kann neue Benutzer anlegen.</p>
+                </div>
+                <div class="task system">
+                    <a tal:attributes="href uri_system">Verwalten Sie Ihr System</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

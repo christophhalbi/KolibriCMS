@@ -1,0 +1,40 @@
+﻿<div metal:use-macro="../../macros.tmpl/object_heading"/>
+<form action="" method="post">
+    <fieldset tal:condition="php:!self.id or !self.is_restriction_node()">
+        <label>
+            <span>Titel</span>
+            <input type="text" name="title" tal:attributes="value self/title"/>
+        </label>
+        <label>
+            <span>Titel (SEO)</span>
+            <input type="text" name="title_alt" tal:attributes="value self/title_alt"/>
+        </label>
+        <label>
+            <span>In Navigation anzeigen</span>
+            <input type="checkbox" name="display_in_navi" value="1" tal:attributes="checked self/display_in_navi"/>
+        </label>
+        <label>
+            <span>Schlagwörter</span>
+            <input type="text" class="large" name="seo_keywords" tal:attributes="value self/seo_keywords"/>
+        </label>
+        <label>
+            <span>Beschreibung</span>
+            <input type="text" class="large" name="seo_description" tal:attributes="value self/seo_description"/>
+        </label>
+        <p><button type="submit" name="submit" value="1"><span>Speichern</span></button></p>
+    </fieldset>
+    <div tal:condition="self/id" metal:use-macro="../../macros.tmpl/new_element"/>
+    <div tal:condition="self/id" metal:use-macro="../../macros.tmpl/plugins"/>
+    <div tal:condition="self/id" class="properties_container objects">
+        <span>Seitenelemente</span>
+        <div tal:define="objects self/page_elements" tal:omit-tag="" metal:use-macro="../../macros.tmpl/objects"/>
+        <p class="message warning" tal:condition="not:self/page_elements">keine Seitenelemente vorhanden</p>
+    </div>
+    <div tal:condition="self/id" class="properties_container objects">
+        <span>Unterseiten</span>
+        <div tal:define="objects self/page_children" metal:use-macro="../../macros.tmpl/objects"/>
+        <p class="message warning" tal:condition="not:self/page_children">keine Unterseiten vorhanden</p>
+    </div>
+    <div tal:condition="php:self.id and !user.is_editor()" metal:use-macro="../../macros.tmpl/body_content"/>
+    <div tal:condition="self/id" metal:use-macro="../../macros.tmpl/operations"/>
+</form>

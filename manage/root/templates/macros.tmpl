@@ -1,0 +1,119 @@
+﻿<div metal:define-macro="navigation" id="navigation">
+    <div id="cms_title">
+        <h1>KolibriCMS</h1>
+        <span class="cms_current_user" tal:content="string:eingeloggt als ${user/name}"/>
+    </div>
+    <ul class="menue">
+        <li tal:repeat="item navigation" tal:attributes="class item/class_name">
+            <a tal:attributes="href item/href" tal:content="item/name"/>
+        </li>
+    </ul>
+    <div class="hidden_parameters">
+        <a id="uri_base" tal:attributes="href uri_base"/>
+    </div>
+</div>
+
+<div metal:define-macro="object_heading" class="object_heading">
+    <h2 class="breadcrumb">
+        <tal:block tal:repeat="parent self/get_parents" tal:omit-tag="">
+            <a tal:attributes="href parent/get_management_url" tal:content="string:${parent/get_title}"/>
+            <span>/</span>
+        </tal:block>
+        <span tal:content="self/get_title"/>
+        <span class="changed" tal:content="self/get_changed"/>
+    </h2>
+</div>
+
+<div metal:define-macro="message" tal:attributes="class string:message ${message/type}">
+    <span tal:content="message/head"/>
+    <ul tal:condition="message/notifications">
+        <li tal:repeat="notification message/notifications" tal:content="notification"/>
+    </ul>
+</div>
+
+<div metal:define-macro="objects" tal:omit-tag="">
+    <ul class="no_bullets">
+        <li tal:repeat="object objects" class="sortable" data-object_id="${object/id}">
+            <div class="object">
+                <a tal:condition="php:object.is_object_type('cms_image')" data-object_id="${object/id}" tal:attributes="href object/get_href" class="preview"/>
+                <a tal:attributes="href object/get_management_url" tal:content="object/get_title"/>
+                <div class="toolbar">
+                    <span class="description" tal:content="php:(object.is_page()) ? object.get_changed() : object.get_description() . ' ' . object.get_changed()"/>
+                    <div class="toolbar_links">
+                        <a tal:attributes="href object/get_management_url" class="edit"/>
+                        <a tal:attributes="href object/get_management_delete_url" class="delete"/>
+                        <span class="sorter up" data-dir="up"/>
+                        <span class="sorter down" data-dir="down"/>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="properties_container new_element" metal:define-macro="new_element">
+    <span>neues Element</span>
+    <div tal:repeat="object_type object_types">
+        <a tal:attributes="href string:${uri_content}?parent=${self/id}&insert_object=${object_type/value}; class object_type/value" tal:content="object_type/name"/>
+    </div>
+</div>
+
+<div class="properties_container plugins" metal:define-macro="plugins">
+    <span>Plugins</span>
+    <ul>
+        <li>
+            <a tal:attributes="href string:${uri_content}/pic_uploader?parent=${self/id}">Bilderupload</a>
+        </li>
+    </ul>
+</div>
+
+<div metal:define-macro="body_content" class="properties_container body_content">
+    <span>Ausgabetemplate</span>
+    <p class="message warning" tal:condition="self/has_custom_body_content">Achtung: es wird ein individuelles Ausgabetemplate verwendet</p>
+    <ul>
+        <tal:block tal:condition="self/has_custom_body_content" tal:omit-tag="">
+            <li><a tal:attributes="href self/get_custom_body_content_url">Ausgabetemplate bearbeiten</a></li>
+            <li><a tal:attributes="href string:${uri_filesystem}?delete_template=${self/id}">Ausgabetemplate löschen</a></li>
+        </tal:block>
+        <tal:block tal:condition="not:self/has_custom_body_content" tal:omit-tag="">
+            <li><a tal:attributes="href string:${uri_filesystem}?create_template=${self/id}&type=${self/type}">individuelles Ausgabetemplate anlegen</a></li>
+        </tal:block>
+    </ul>
+</div>
+
+<div metal:define-macro="operations" class="properties_container operations">
+    <span>Operationen</span>
+    <ul>
+        <li tal:condition="not:self/is_content_root"><a tal:attributes="href self/get_management_delete_url" class="delete">Seite löschen</a></li>
+    </ul>
+</div>
+
+<div metal:define-macro="texteditor" tal:omit-tag="">
+    <textarea rows="20" cols="20" id="texteditor_tinymce" name="text" tal:content="self/text"/>
+    <div id="texteditor_tinymce_functions"/>
+    <div class="hidden_parameters">
+        <a id="uri_static" tal:attributes="href uri_static"/>
+        <a id="uri_static_cms" tal:attributes="href uri_static_cms"/>
+        <tal:block tal:define="pic_container php:self.get_global_object('pic_container')">
+            <ul id="static_images" tal:condition="true: pic_container">
+                <li tal:repeat="image pic_container/get_page_elements"><a tal:attributes="href image/get_href" tal:content="image/get_title"/></li>
+            </ul>
+        </tal:block>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<ol metal:define-macro="tree" class="tree">
+    <li tal:repeat="page tree">
+        <tal:block tal:condition="not: page/page_children" tal:omit-tag="">
+            <a class="manage" tal:attributes="href page/get_management_url; data-id page/id; data-parent_id page/parent" tal:content="page/title"/>
+        </tal:block>
+        <tal:block tal:condition="true:page/page_children" tal:define="tree page/page_children; inner string:1" tal:omit-tag="">
+            <input type="checkbox" tal:attributes="id string:page_${page/id}; name string:page_${page/id};" />
+            <label tal:attributes="for string:page_${page/id}">
+                <a class="manage" tal:attributes="href page/get_management_url; data-id page/id; data-parent_id page/parent" tal:content="page/title"/>
+            </label>
+            <ol metal:use-macro="tree" />
+        </tal:block>
+    </li>
+</ol>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/xml;charset=utf-8"/>
+    </head>
+    <body>
+        <ul tal:condition="php: pages or page_elements">
+            <li tal:repeat="object pages" class="node page">
+                <div>
+                    <span data-object_id="${object/id}" class="object_expander">+</span>
+                    <a data-object_id="${object/id}" class="object" tal:attributes="href object/get_href_to_index" title="Link auf Seite" tal:content="object/get_title"/>
+                </div>
+            </li>
+            <li tal:repeat="object page_elements" class="node page_element">
+                <div>
+                    <span tal:condition="true:object/is_container" data-object_id="${object/id}" class="object_expander">+</span>
+                    <a data-object_id="${object/id}" class="object" tal:attributes="href object/get_href_to_index" title="Anker auf Seitenelement" tal:content="object/get_title"/>
+                </div>
+                <tal:block tal:define="object_type object/type">
+                    <div tal:condition="php:(object_type == 'cms_link') or (object_type == 'cms_file') or (object_type =='cms_image')">
+                        <a data-object_id="${object/id}" class="object direct" tal:attributes="href object/get_href">[ Direktlink ]</a>
+                    </div>
+                </tal:block>
+            </li>
+        </ul>
+        <ul tal:condition="not: php: pages or page_elements">
+            <li class="no_objects">keine Objekte vorhanden</li>
+        </ul>
+    </body>
+</html>

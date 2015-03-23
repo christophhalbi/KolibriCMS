@@ -1,0 +1,11 @@
+<div metal:use-macro="../../macros.tmpl/object_heading"/>
+<form action="" method="post">
+    <fieldset>
+        <p><a href="https://www.jsoneditoronline.org/" target="_blank">Editor</a></p>
+        <label>
+            <span>Konfiguration</span>
+            <textarea rows="30" cols="80" name="config" tal:content="self/config"/>
+        </label>
+        <p><button type="submit" name="submit" value="1"><span>Speichern</span></button></p>
+    </fieldset>
+</form>

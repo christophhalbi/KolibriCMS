@@ -1,0 +1,22 @@
+﻿<div metal:use-macro="../../macros.tmpl/object_heading"/>
+<form action="" method="post">
+    <fieldset>
+        <label>
+            <span>Titel</span>
+            <input type="text" name="title" tal:attributes="value self/title"/>
+        </label>
+        <label>
+            <span>URL</span>
+            <input type="text" name="url" id="object_browser_destination" tal:attributes="value self/url"/>
+            <button type="button" onclick="open_object_browser(this, false, null, '%dollar{e%id}');"><span>...</span></button>
+        </label>
+        <label>
+            <span>Ziel</span>
+            <select name="target">
+                <option value="_self"  tal:attributes="selected php:self.target eq '_self'">im gleichen Fenster öffnen</option>
+                <option value="_blank" tal:attributes="selected php:self.target eq '_blank'">in neuem Fenster öffnen</option>
+            </select>
+        </label>
+        <p><button type="submit" name="submit" value="1"><span>Speichern</span></button></p>
+    </fieldset>
+</form>

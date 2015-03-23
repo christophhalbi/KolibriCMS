@@ -1,0 +1,7 @@
+<div tal:attributes="class string:cms_image ${self/align}; id self/get_dcid">
+    <img tal:condition="not: self/url | self/image_highres" tal:attributes="src self/get_href; title self/get_title_alt; alt self/get_title_alt"/>
+    <a tal:condition="self/url | self/image_highres" tal:attributes="href self/get_link | self/get_highres_href; target self/url_target">
+        <img tal:attributes="src self/get_href; title self/get_title_alt; alt self/get_title_alt"/>
+    </a>
+    <div tal:condition="self/text" tal:content="structure self/get_text"/>
+</div>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title tal:content="string:${name}: Management - Globale Objekte"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div id="management">
+            <div metal:use-macro="../macros.tmpl/navigation"/>
+            <div id="global_objects">
+                <h2>Globale Objekte</h2>
+                <p tal:condition="true:message" metal:use-macro="../macros.tmpl/message"/>
+                <p class="message warning" tal:condition="not:global_objects">keine globalen Objekte vorhanden</p>
+                <form action="" method="post">
+                    <fieldset>
+                        <label>
+                            <span>Name</span>
+                            <input type="text" name="name"/>
+                        </label>
+                        <label>
+                            <span>Objekt</span>
+                            <input type="text" name="object_id" id="object_browser_destination"/>
+                            <button type="button" onclick="open_object_browser(this, false, null, '%id');"><span>...</span></button>
+                        </label>
+                        <p><button type="submit" name="submit_global_object" value="1"><span>Speichern</span></button></p>
+                    </fieldset>
+                </form>
+                <p/>
+                <table tal:condition="global_objects">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Objekt</th>
+                            <th colspan="1"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr tal:repeat="global_object global_objects">
+                            <td><span tal:content="global_object/name"/></td>
+                            <td><a tal:attributes="href global_object/get_object/get_management_url"><span tal:content="global_object/object_id"/></a></td>
+                            <td><a tal:attributes="href string:?delete=${global_object/id}" class="delete">löschen</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

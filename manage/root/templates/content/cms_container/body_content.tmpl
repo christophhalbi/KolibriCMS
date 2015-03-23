@@ -1,0 +1,5 @@
+<div tal:attributes="class string:cms_container ${self/classes}; id self/get_dcid">
+    <tal:block tal:repeat="page_element self/page_elements">
+        <div tal:replace="structure page_element/get_body_content"/>
+    </tal:block>
+</div>

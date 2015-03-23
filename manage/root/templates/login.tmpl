@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title tal:content="string:${name}: Management - Login"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+    </head>
+    <body id="login">
+        <div id="management">
+            <div id="login_form">
+                <h1 class="cms_title">KolibriCMS</h1>
+                <p tal:condition="true:message" metal:use-macro="macros.tmpl/message"/>
+                <form action="" method="post">
+                    <fieldset>
+                        <label>
+                            <span>Benutzer</span>
+                            <input type="text" name="user"/>
+                        </label>
+                        <label>
+                            <span>Passwort</span>
+                            <input type="password" name="password"/>
+                        </label>
+                        <p><button type="submit" name="submit" value="1"><span>Einloggen</span></button></p>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

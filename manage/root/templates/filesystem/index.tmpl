@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title tal:content="string:${name}: Management - Templates"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <link rel="stylesheet" href="${uri_static}/css/codemirror.css"/>
+        <script src="${uri_static}/scripts/codemirror.js"></script>
+        <script type="text/javascript" src="${uri_static}/scripts/codemirror/xml.js"></script>
+        <script type="text/javascript" src="${uri_static}/scripts/codemirror/css.js"></script>
+        <script type="text/javascript" src="${uri_static}/scripts/codemirror/javascript.js"></script>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div id="management">
+            <div metal:use-macro="../macros.tmpl/navigation"/>
+            <div id="filesystem">
+                <tal:block tal:condition="true:files" tal:omit-tag="">
+                    <h2>Templates</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Template</th>
+                                <th>Verwendung</th>
+                                <th>Zuletzt geändert</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr tal:repeat="file files">
+                                <td><a tal:attributes="href file/uri_manage" tal:content="file/name"/></td>
+                                <td><span tal:content="file/usage"/></td>
+                                <td><span class="changed" tal:content="file/changed"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </tal:block>
+                <tal:block tal:condition="true:file" tal:omit-tag="">
+                    <h2 tal:content="file"/>
+                    <form action="" method="post">
+                        <fieldset>
+                            <input type="hidden" name="file" tal:attributes="value file"/>
+                            <input type="hidden" name="mode" tal:attributes="value mode" id="mode"/>
+                            <textarea rows="20" cols="70" id="texteditor_codemirror" name="file_content" tal:content="file_content"/>
+                            <p><button type="submit" name="submit_file" value="1"><span>Speichern</span></button></p>
+                        </fieldset>
+                    </form>
+                </tal:block>
+            </div>
+        </div>
+    </body>
+</html>

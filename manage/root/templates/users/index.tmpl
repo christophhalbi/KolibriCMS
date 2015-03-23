@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title tal:content="string:${name}: Management - Benutzer"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+    </head>
+    <body>
+         <div id="management">
+            <div metal:use-macro="../macros.tmpl/navigation"/>
+            <div id="users">
+                <h2>Benutzer</h2>
+                <p tal:condition="true:message" metal:use-macro="../macros.tmpl/message"/>
+                <p class="message warning" tal:condition="not:users">keine Benutzer vorhanden</p>
+                <form action="" method="post">
+                    <fieldset>
+                        <label>
+                            <span>Name</span>
+                            <input type="text" name="new_name"/>
+                        </label>
+                        <label>
+                            <span>Passwort</span>
+                            <input type="password" name="new_password"/>
+                        </label>
+                        <label>
+                            <span>Rolle</span>
+                            <select name="new_role">
+                                <option tal:repeat="role roles" tal:attributes="value role" tal:content="role"/>
+                            </select>
+                        </label>
+                        <p><button type="submit" name="submit_user" value="1"><span>Speichern</span></button></p>
+                    </fieldset>
+                </form>
+                <p/>
+                <table tal:condition="users">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Rolle</th>
+                            <th colspan="2"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr tal:repeat="user users">
+                            <td class="top"><span tal:content="user/name"/></td>
+                            <td class="top"><span tal:content="user/role"/></td>
+                            <td tal:condition="user/is_editor">
+                                <form action="" method="post">
+                                    <fieldset class="user_nodes">
+                                        <ul class="user_nodes_list">
+                                            <li tal:condition="not:user/nodes" class="no_nodes">keine Knoten definiert</li>
+                                            <li tal:repeat="node user/nodes">
+                                                <a tal:attributes="href node/object/get_management_url" class="node" tal:content="node/object/get_title"/>
+                                                <a tal:attributes="href string:?delete_user_node=${node/id}" class="delete">löschen</a>
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" name="user" tal:attributes="value user/id"/>
+                                        <label>
+                                            <span>neuer Knoten</span>
+                                            <input type="text" name="node" tal:attributes="id string:node_${user/id}"/>
+                                            <button type="button" onclick="open_object_browser(this, true, 'node_${user/id}', '%id');"><span>...</span></button>
+                                        </label>
+                                        <p><button type="submit" name="submit_user_node" value="1"><span>Speichern</span></button></p>
+                                    </fieldset>
+                                </form>
+                            </td>
+                            <td tal:condition="not:user/is_editor"/>
+                            <td class="bottom"><a tal:attributes="href string:?delete=${user/id}" class="delete">löschen</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

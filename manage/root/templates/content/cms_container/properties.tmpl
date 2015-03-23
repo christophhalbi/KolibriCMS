@@ -1,0 +1,26 @@
+﻿<div metal:use-macro="../../macros.tmpl/object_heading"/>
+<form action="" method="post">
+    <fieldset>
+        <label>
+            <span>Titel</span>
+            <input type="text" name="title" tal:attributes="value self/title"/>
+        </label>
+        <label>
+            <span>Klassen</span>
+            <input type="text" name="classes" tal:attributes="value self/classes"/>
+        </label>
+        <label>
+            <span>Template</span>
+            <input type="text" name="template" tal:attributes="value self/template"/>
+        </label>
+        <p><button type="submit" name="submit" value="1"><span>Speichern</span></button></p>
+    </fieldset>
+    <div tal:condition="self/id" metal:use-macro="../../macros.tmpl/new_element"/>
+    <div tal:condition="self/id" metal:use-macro="../../macros.tmpl/plugins"/>
+    <div tal:condition="self/id" class="properties_container objects">
+        <span>Seitenelemente</span>
+        <div tal:define="objects self/page_elements" metal:use-macro="../../macros.tmpl/objects"/>
+        <p class="message warning" tal:condition="not:self/page_elements">keine Seitenelemente vorhanden</p>
+    </div>
+    <div tal:condition="php:self.id and !user.is_editor()" metal:use-macro="../../macros.tmpl/body_content"/>
+</form>

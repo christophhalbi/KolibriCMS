@@ -1,0 +1,15 @@
+﻿<div metal:use-macro="../../macros.tmpl/object_heading"/>
+<form action="" enctype="multipart/form-data" method="post">
+    <fieldset>
+        <label>
+            <span>Titel</span>
+            <input type="text" name="title" tal:attributes="value self/title"/>
+        </label>
+        <label>
+            <span>Datei</span>
+            <input type="file" name="file"/>
+            <a class="properties_link" tal:condition="self/file" tal:attributes="href self/get_href">Datei-Link</a>
+        </label>
+        <p><button type="submit" name="submit" value="1"><span>Speichern</span></button></p>
+    </fieldset>
+</form>

@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="cms">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <title tal:content="string:${name}: Management - Inhalte"/>
+        <link rel="stylesheet" href="${uri_static}/css/styles.css" type="text/css"/>
+        <script type="text/javascript" src="${uri_static}/scripts/scripts.js"></script>
+        <script type="text/javascript" src="${uri_static}/scripts/tiny_mce/tiny_mce.js"/>
+    </head>
+    <body>
+        <div id="management">
+            <div metal:use-macro="../macros.tmpl/navigation"/>
+            <div id="tree">
+                Seitenbaum
+                <tal:block tal:condition="not: tree" tal:omit-tag="">
+                    <p><i>keine Objekte</i></p>
+                </tal:block>
+                <tal:block tal:condition="true:tree" tal:omit-tag="">
+                    <tal:block metal:use-macro="../macros.tmpl/tree"/>
+                </tal:block>
+            </div>
+            <div id="content">
+                <p tal:condition="true:message" metal:use-macro="../macros.tmpl/message"/>
+                <div id="properties" tal:content="structure content"/>
+            </div>
+        </div>
+    </body>
+</html>
