@@ -452,7 +452,7 @@ class DB {
 
         $global_objects_array = array();
 
-        $sth = $this->dbh->prepare("SELECT * FROM cms_global_object");
+        $sth = $this->dbh->prepare("SELECT * FROM cms_global_object ORDER BY name");
 
         $sth->execute();
 
@@ -496,7 +496,7 @@ class DB {
 
         $users_array = array();
 
-        $sth = $this->dbh->prepare("SELECT * FROM cms_user");
+        $sth = $this->dbh->prepare("SELECT * FROM cms_user ORDER BY name");
 
         $sth->execute();
 
