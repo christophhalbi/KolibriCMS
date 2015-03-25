@@ -2,8 +2,6 @@
 
 require_once "../base.php";
 
-//error_reporting(-1);
-
 $template = new PHPTAL(path_for("/manage/root/templates/login.tmpl"));
 
 if (isset($_POST["submit"])) {
